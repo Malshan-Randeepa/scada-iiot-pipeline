@@ -1,37 +1,43 @@
-#include <WiFi.h>
+/**
+ * @file ESP01_Edge_Node.ino
+ * @brief Industrial IoT Edge Node Firmware for ESP8266
+ * @target NodeMCU v1.0 / WeMos D1 Mini / Generic ESP8266
+ */
+
+#include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
 // =============================================================================
 // NETWORK CONFIGURATION
 // =============================================================================
-// Enter your mobile hotspot SSID and Password
-const char* ssid     = "Malshan’s Iphone";
-const char* password = "12345678";
+const char* ssid     = "YOUR_HOTSPOT_NAME";
+const char* password = "YOUR_HOTSPOT_PASSWORD";
 
-// Your Host PC's Wi-Fi IPv4 address (Mosquitto Broker)
+// Host PC IPv4 address running Mosquitto
 const char* mqtt_server = "172.20.10.7";
 const int   mqtt_port   = 1883;
 
 // =============================================================================
-// ESP01 NODE IDENTITY & CREDENTIALS
+// NODE IDENTITY & MQTT TOPICS (ESP01)
 // =============================================================================
-const char* mqtt_clientid = "EE2120_ESP32_01";
+const char* mqtt_clientid = "EE2120_ESP8266_01";
 const char* mqtt_user     = "esp01";
-const char* mqtt_password = "stud1"; // The password created in mosquitto_passwd
+const char* mqtt_password = "YOUR_ESP01_PASSWORD"; // Password set in mosquitto_passwd
 
-// =============================================================================
-// MQTT TOPIC DEFINITIONS (ESP01 Namespace)
-// =============================================================================
 const char* temp_topic       = "EE2120/ESP01/temp";
 const char* led_topic        = "EE2120/ESP01/LED/cmd";
 const char* led_status_topic = "EE2120/ESP01/LED/status";
 
 // =============================================================================
-// HARDWARE DEFINITION
+// HARDWARE DEFINITION & ACTIVE-LOW LOGIC
 // =============================================================================
 #ifndef LED_BUILTIN
 #define LED_BUILTIN 2
 #endif
+
+// ESP8266 onboard LED is typically Active-LOW
+#define LED_ON  LOW
+#define LED_OFF HIGH
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -54,13 +60,13 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
   if (String(topic) == led_topic) {
     if (message == "1") {
-      digitalWrite(LED_BUILTIN, HIGH);
+      digitalWrite(LED_BUILTIN, LED_ON);
       client.publish(led_status_topic, "1");
-      Serial.println("[ACTUATOR] LED -> HIGH | State Verified: 1");
+      Serial.println("[ACTUATOR] LED -> ON | State Verified: 1");
     } else if (message == "0") {
-      digitalWrite(LED_BUILTIN, LOW);
+      digitalWrite(LED_BUILTIN, LED_OFF);
       client.publish(led_status_topic, "0");
-      Serial.println("[ACTUATOR] LED -> LOW | State Verified: 0");
+      Serial.println("[ACTUATOR] LED -> OFF | State Verified: 0");
     }
   }
 }
@@ -99,14 +105,15 @@ void reconnect() {
 
     if (client.connect(mqtt_clientid, mqtt_user, mqtt_password)) {
       Serial.println(" Connected.");
-      
-      // Subscribe to actuator command channel
+
+      // Subscribe to command channel
       client.subscribe(led_topic);
       Serial.print("[MQTT] Subscribed to topic: ");
       Serial.println(led_topic);
 
       // Publish initial state verification
-      int currentLedState = digitalRead(LED_BUILTIN);
+      // If pin reads LOW, LED is ON (state 1), else OFF (state 0)
+      int currentLedState = (digitalRead(LED_BUILTIN) == LED_ON) ? 1 : 0;
       client.publish(led_status_topic, currentLedState ? "1" : "0");
     } else {
       Serial.print(" Failed (rc=");
@@ -118,13 +125,13 @@ void reconnect() {
 }
 
 // -----------------------------------------------------------------------------
-// Initialization
+// Setup & Main Loop
 // -----------------------------------------------------------------------------
 void setup() {
   Serial.begin(115200);
 
   pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, LOW);
+  digitalWrite(LED_BUILTIN, LED_OFF); // Initialize turned off
 
   setup_wifi();
 
@@ -132,21 +139,18 @@ void setup() {
   client.setCallback(callback);
 }
 
-// -----------------------------------------------------------------------------
-// Main Execution Loop
-// -----------------------------------------------------------------------------
 void loop() {
   if (!client.connected()) {
     reconnect();
   }
   client.loop();
 
-  // Publish telemetry at 1 Hz non-blocking interval
+  // Telemetry loop: 1 Hz interval
   unsigned long now = millis();
   if (now - lastMsgTime > 1000) {
     lastMsgTime = now;
 
-    // Simulated temperature reading: 20.0 to 40.0 C
+    // Simulated temperature reading: 20.0 to 40.0 °C
     float temperature = random(200, 400) / 10.0;
 
     char tempString[8];
