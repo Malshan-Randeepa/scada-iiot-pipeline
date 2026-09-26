@@ -1,0 +1,17 @@
+# Operating System & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Arduino / PlatformIO Build Artifacts
+build/
+*.hex
+*.elf
+*.bin
+.pio/
+
+# MQTT Secrets & Credentials (never expose passwords publicly)
+passwords
+secrets.h
+*.conf.local
