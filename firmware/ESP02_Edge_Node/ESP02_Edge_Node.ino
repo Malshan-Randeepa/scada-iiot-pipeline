@@ -4,23 +4,23 @@
 // =============================================================================
 // NETWORK CONFIGURATION
 // =============================================================================
-const char* ssid     = "YOUR_HOTSPOT_NAME";
-const char* password = "YOUR_HOTSPOT_PASSWORD";
+const char* ssid     = "Malshans Iphone";
+const char* password = "12345678";
 
 // Host PC IPv4 address running Mosquitto
 const char* mqtt_server = "172.20.10.7";
 const int   mqtt_port   = 1883;
 
 // =============================================================================
-// NODE IDENTITY & MQTT TOPICS (ESP01)
+// NODE IDENTITY & MQTT TOPICS (ESP02)
 // =============================================================================
-const char* mqtt_clientid = "EE2120_ESP8266_01";
-const char* mqtt_user     = "esp01";
-const char* mqtt_password = "YOUR_ESP01_PASSWORD"; // Password set in mosquitto_passwd
+const char* mqtt_clientid = "EE2120_ESP8266_02";
+const char* mqtt_user     = "esp02";
+const char* mqtt_password = "stud2"; // Password set in mosquitto_passwd
 
-const char* temp_topic       = "EE2120/ESP01/temp";
-const char* led_topic        = "EE2120/ESP01/LED/cmd";
-const char* led_status_topic = "EE2120/ESP01/LED/status";
+const char* temp_topic       = "EE2120/ESP02/temp";
+const char* led_topic        = "EE2120/ESP02/LED/cmd";
+const char* led_status_topic = "EE2120/ESP02/LED/status";
 
 // =============================================================================
 // HARDWARE DEFINITION & ACTIVE-LOW LOGIC
