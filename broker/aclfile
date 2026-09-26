@@ -1,0 +1,17 @@
+user esp01
+topic write EE2120/ESP01/temp
+topic write EE2120/ESP01/LED/status
+topic read EE2120/ESP01/LED/cmd
+
+user esp02
+topic write EE2120/ESP02/temp
+topic write EE2120/ESP02/LED/status
+topic read EE2120/ESP02/LED/cmd
+
+user ignition_scada
+topic read EE2120/+/temp
+topic write EE2120/+/LED/cmd
+topic read EE2120/+/LED/status
+
+user ee2120
+topic readwrite EE2120/#
