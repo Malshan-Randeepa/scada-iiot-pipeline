@@ -4,8 +4,8 @@
 // =============================================================================
 // NETWORK CONFIGURATION
 // =============================================================================
-const char* ssid     = "YOUR_HOTSPOT_NAME";
-const char* password = "YOUR_HOTSPOT_PASSWORD";
+const char* ssid     = "Malshan’s Iphone";
+const char* password = "12345678";
 
 // Host PC IPv4 address running Mosquitto
 const char* mqtt_server = "172.20.10.7";
@@ -16,7 +16,7 @@ const int   mqtt_port   = 1883;
 // =============================================================================
 const char* mqtt_clientid = "EE2120_ESP8266_01";
 const char* mqtt_user     = "esp01";
-const char* mqtt_password = "YOUR_ESP01_PASSWORD"; // Password set in mosquitto_passwd
+const char* mqtt_password = "stud1"; // Password set in mosquitto_passwd
 
 const char* temp_topic       = "EE2120/ESP01/temp";
 const char* led_topic        = "EE2120/ESP01/LED/cmd";
