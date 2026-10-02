@@ -1,17 +1,19 @@
-# Operating System & IDE
+# Local credentials
+**/secrets.h
+
+# Local Mosquitto password files
+passwords
+**/passwords
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Ignition Gateway backups
+*.gwbk
+
+# IDE / OS
+.vscode/
 .DS_Store
 Thumbs.db
-.vscode/
-.idea/
-
-# Arduino / PlatformIO Build Artifacts
-build/
-*.hex
-*.elf
-*.bin
-.pio/
-
-# MQTT Secrets & Credentials (never expose passwords publicly)
-passwords
-secrets.h
-*.conf.local
