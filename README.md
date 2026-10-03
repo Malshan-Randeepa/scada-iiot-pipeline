@@ -232,7 +232,7 @@ See [docs/TESTING.md](docs/TESTING.md).
 
 ## Author
 
-**Malshan Randeepa**
+**Ranaweera M.K.M.R.**
 
 Electrical and Electronic Engineering undergraduate project focused on SCADA, IIoT, MQTT, industrial automation, and embedded systems.
 
