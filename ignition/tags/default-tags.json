@@ -1,0 +1,31 @@
+{
+  "alarms": [
+    {
+      "deadband": 1.0,
+      "mode": "AboveValue",
+      "name": "Critical Priority Alarm ",
+      "priority": "Critical",
+      "setpointA": 39.0,
+      "timeOffDelaySeconds": 2.0,
+      "timeOnDelaySeconds": 2.0
+    },
+    {
+      "deadband": 1.0,
+      "mode": "AboveValue",
+      "name": "High Priority Alarm",
+      "priority": "High",
+      "setpointA": 36.0,
+      "timeOffDelaySeconds": 2.0,
+      "timeOnDelaySeconds": 2.0
+    }
+  ],
+  "dataType": "Float4",
+  "expression": "toFloat({[MQTT Engine]ESP32/EE2120/ESP02/temp})",
+  "historyEnabled": true,
+  "historyProvider": "Sample_SQLite_Database",
+  "historySampleRate": 1,
+  "name": "ESP02_Temperature",
+  "sampleMode": "Periodic",
+  "tagType": "AtomicTag",
+  "valueSource": "expr"
+}
