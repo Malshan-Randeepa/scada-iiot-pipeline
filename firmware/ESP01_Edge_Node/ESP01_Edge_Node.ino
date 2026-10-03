@@ -2,6 +2,9 @@
 #include <PubSubClient.h>
 #include "secrets.h"
 
+// MQTT client identity
+const char* mqtt_clientid = "EE2120_ESP8266_01";
+
 const char* temp_topic       = "EE2120/ESP01/temp";
 const char* led_topic        = "EE2120/ESP01/LED/cmd";
 const char* led_status_topic = "EE2120/ESP01/LED/status";
